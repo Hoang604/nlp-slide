@@ -60,12 +60,12 @@ const colorMap: Record<string, { border: string; header: string; badge: string }
     </div>
 
     <!-- Main Content: LaTeX Formula Container -->
-    <div class="p-4 bg-gray-50/50 dark:bg-gray-950/40 flex flex-col items-center justify-center min-h-[70px]">
+    <div class="p-3 bg-gray-50/50 dark:bg-gray-950/40 flex flex-col items-center justify-center min-h-[60px]">
       <slot />
     </div>
 
     <!-- Principle / Intuition Section -->
-    <div v-if="intuition || $slots.intuition" class="px-4 py-2.5 border-t border-gray-100 dark:border-gray-800 text-xs bg-white/40 dark:bg-gray-900/40 flex items-start gap-2">
+    <div v-if="intuition || $slots.intuition" class="px-4 py-2 border-t border-gray-100 dark:border-gray-800 text-xs bg-white/40 dark:bg-gray-900/40 flex items-start gap-2">
       <svg class="w-3.5 h-3.5 mt-0.5 text-blue-600 dark:text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="10" />
         <path d="M12 16v-4M12 8h.01" />
@@ -77,7 +77,7 @@ const colorMap: Record<string, { border: string; header: string; badge: string }
     </div>
 
     <!-- Technical Note Section -->
-    <div v-if="caveat || $slots.caveat" class="px-4 py-2 border-t border-gray-100 dark:border-gray-800 text-[11px] bg-amber-500/5 dark:bg-amber-900/10 text-amber-800 dark:text-amber-200 flex items-start gap-2">
+    <div v-if="caveat || $slots.caveat" class="px-4 py-1.5 border-t border-gray-100 dark:border-gray-800 text-[11px] bg-amber-500/5 dark:bg-amber-900/10 text-amber-800 dark:text-amber-200 flex items-start gap-2">
       <svg class="w-3.5 h-3.5 mt-0.5 text-amber-600 dark:text-amber-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
         <path d="M12 9v4M12 17h.01" />

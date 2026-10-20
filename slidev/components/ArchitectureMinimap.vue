@@ -14,9 +14,9 @@ function isActive(target: string): boolean {
 </script>
 
 <template>
-  <div class="p-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 shadow-sm max-w-[290px] mx-auto select-none">
-    <div class="text-[10px] font-bold text-gray-500 dark:text-gray-400 tracking-wider text-center mb-1 uppercase font-mono">
-      Transformer Architecture (Figure 1)
+  <div class="p-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 shadow-sm max-w-[245px] mx-auto select-none">
+    <div class="text-[9.5px] font-bold text-gray-500 dark:text-gray-400 tracking-wider text-center mb-0.5 uppercase font-mono">
+      Transformer Architecture
     </div>
 
     <svg viewBox="0 0 310 395" class="w-full h-auto text-[10px] font-sans">

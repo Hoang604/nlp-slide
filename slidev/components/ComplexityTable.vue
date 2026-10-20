@@ -14,17 +14,17 @@ const rows = [
     complexity: 'O(n² · d)',
     sequential: 'O(1)',
     maxPath: 'O(1)',
-    pros: 'Song song hóa tuyệt đối, đường dẫn thông tin trực tiếp',
+    pros: 'Song song hóa toàn bộ chuỗi, đường truyền thông tin trực tiếp',
     badge: 'Paper Core'
   },
   {
     id: 'recurrent',
-    type: 'Recurrent (RNN/LSTM)',
+    type: 'Recurrent',
     complexity: 'O(n · d²)',
     sequential: 'O(n)',
     maxPath: 'O(n)',
-    pros: 'Nghẽn tuần tự t1 → tn, suy hao gradient chuỗi dài',
-    badge: 'Baseline'
+    pros: 'Phụ thuộc tuần tự theo thời gian, suy giảm gradient trên chuỗi dài',
+    badge: 'RNN / LSTM'
   },
   {
     id: 'convolutional',
@@ -32,16 +32,16 @@ const rows = [
     complexity: 'O(k · n · d)',
     sequential: 'O(1)',
     maxPath: 'O(log_k(n))',
-    pros: 'Cần xếp chồng nhiều lớp conv để mở rộng receptive field',
+    pros: 'Cần xếp chồng nhiều lớp tích chập để mở rộng vùng tiếp nhận ngữ cảnh',
     badge: 'CNN'
   },
   {
     id: 'restricted',
-    type: 'Self-Attention (restricted r)',
+    type: 'Restricted Self-Attention',
     complexity: 'O(r · n · d)',
     sequential: 'O(1)',
     maxPath: 'O(n / r)',
-    pros: 'Chỉ chú ý trong lân cận r (tiền thân Sparse/Local Attention)',
+    pros: 'Giới hạn phạm vi chú ý trong vùng lân cận kích thước r',
     badge: 'Variant'
   }
 ]
@@ -52,11 +52,11 @@ const rows = [
     <table class="w-full border-collapse text-left">
       <thead>
         <tr class="bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-200 dark:border-gray-700">
-          <th class="px-2.5 py-1.5 text-[11px]">Layer Type</th>
-          <th class="px-2.5 py-1.5 text-[11px]">Complexity per Layer</th>
-          <th class="px-2.5 py-1.5 text-[11px]">Sequential Ops</th>
-          <th class="px-2.5 py-1.5 text-[11px]">Maximum Path Length</th>
-          <th class="px-2.5 py-1.5 text-[11px]">Đánh giá bản chất</th>
+          <th class="px-2.5 py-1 text-[11px]">Layer Type</th>
+          <th class="px-2.5 py-1 text-[11px]">Complexity per Layer</th>
+          <th class="px-2.5 py-1 text-[11px]">Sequential Ops</th>
+          <th class="px-2.5 py-1 text-[11px]">Max Path Length</th>
+          <th class="px-2.5 py-1 text-[11px]">Đánh giá bản chất</th>
         </tr>
       </thead>
       <tbody>
@@ -67,30 +67,30 @@ const rows = [
               ? 'bg-blue-500/10 dark:bg-blue-900/30 font-semibold' 
               : 'hover:bg-gray-50/50 dark:hover:bg-gray-800/30 opacity-80'
           ]">
-          <td class="px-2.5 py-1 flex items-center gap-1.5">
+          <td class="px-2.5 py-0.5 flex items-center gap-1.5">
             <span v-if="r.id === highlight" class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping"></span>
             <span>{{ r.type }}</span>
             <span v-if="r.badge" class="ml-1 text-[9px] px-1.5 py-0.2 rounded font-mono uppercase bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
               {{ r.badge }}
             </span>
           </td>
-          <td class="px-2.5 py-1 font-mono" :class="r.id === highlight ? 'text-blue-600 dark:text-blue-400 font-bold' : ''">
+          <td class="px-2.5 py-0.5 font-mono" :class="r.id === highlight ? 'text-blue-600 dark:text-blue-400 font-bold' : ''">
             {{ r.complexity }}
           </td>
-          <td class="px-2.5 py-1 font-mono" :class="r.id === highlight ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ''">
+          <td class="px-2.5 py-0.5 font-mono" :class="r.id === highlight ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ''">
             {{ r.sequential }}
           </td>
-          <td class="px-2.5 py-1 font-mono" :class="r.id === highlight ? 'text-purple-600 dark:text-purple-400 font-bold' : ''">
+          <td class="px-2.5 py-0.5 font-mono" :class="r.id === highlight ? 'text-purple-600 dark:text-purple-400 font-bold' : ''">
             {{ r.maxPath }}
           </td>
-          <td class="px-2.5 py-1 text-gray-600 dark:text-gray-400 text-[10.5px]">
+          <td class="px-2.5 py-0.5 text-gray-600 dark:text-gray-400 text-[10.5px]">
             {{ r.pros }}
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="px-3 py-1 bg-gray-50 dark:bg-gray-900/60 text-[9.5px] text-gray-500 flex justify-between border-t border-gray-100 dark:border-gray-800">
-      <span>* Trích xuất theo Table 1, Vaswani et al. (2017) "Attention Is All You Need".</span>
+    <div class="px-3 py-0.5 bg-gray-50 dark:bg-gray-900/60 text-[9.5px] text-gray-500 flex justify-between border-t border-gray-100 dark:border-gray-800">
+      <span>* Trích xuất theo Table 1, Vaswani et al., 2017 — Attention Is All You Need.</span>
       <span class="font-mono">n: sequence length, d: representation dimension, k: kernel size</span>
     </div>
   </div>

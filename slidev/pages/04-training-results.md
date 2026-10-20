@@ -1,90 +1,46 @@
 ---
-transition: slide-up
-layout: section
-class: text-center
----
-
-# PHẦN 04
-## Chi phí Tính toán, Huấn luyện & Đánh giá Thực nghiệm
-### Phân tích Độ phức tạp & Kết quả Thực nghiệm
-
----
 transition: slide-left
 ---
 
-# Phân tích Độ phức tạp Tính toán (Bảng 1, Vaswani et al., 2017)
+# Ưu nhược điểm & So sánh với Phương pháp khác
 
-Đánh giá định lượng chi phí tính toán giữa Self-Attention, Recurrent và Convolutional:
-
-<div class="mt-2.5">
+<div class="mt-1">
 <ComplexityTable highlight="self-attention" />
 </div>
 
 <div class="grid grid-cols-2 gap-3 mt-2 text-[10.5px]">
-<div class="p-2.5 rounded-lg border border-blue-500/20 bg-blue-500/5">
+<div class="p-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 leading-snug">
 
-<div class="font-semibold text-blue-700 dark:text-blue-300 text-xs mb-1">
+<div class="font-semibold text-emerald-700 dark:text-emerald-300 text-xs mb-0.5">
+Ưu điểm của Kiến trúc Transformer
+</div>
 
-Trường hợp $n < d$ trong các tác vụ NLP:
+* **Song song hóa và tối ưu khi $n < d$:** Giảm số bước tuần tự xuống $O(1)$ trên GPU; chi phí $O(n^2 \cdot d)$ thấp hơn $O(n \cdot d^2)$ của mạng Recurrent.
+* **Bảo toàn ngữ cảnh xa:** Đường truyền thông tin tối đa giữa hai vị trí bất kỳ là $O(1)$, vượt trội so với $O(n)$ và $O(\log_k n)$.
 
 </div>
 
-* Độ dài câu $n$ thông thường nhỏ hơn kích thước vector biểu diễn $d_{model} = 512$.
-* Chi phí tính toán $O(n^2 \cdot d)$ của Self-Attention tối ưu hơn so với $O(n \cdot d^2)$ của các lớp Recurrent.
+<div class="p-2 rounded-lg border border-rose-500/30 bg-rose-500/10 leading-snug">
 
+<div class="font-semibold text-rose-700 dark:text-rose-300 text-xs mb-0.5">
+Nhược điểm và Giới hạn của Phương pháp
 </div>
 
-<div class="p-2.5 rounded-lg border border-purple-500/20 bg-purple-500/5">
-
-<div class="font-semibold text-purple-700 dark:text-purple-300 text-xs mb-1">
-
-Số lượng Phép toán Tuần tự:
-
-</div>
-
-* Recurrent đòi hỏi $O(n)$ bước tính toán tuần tự không thể chia nhỏ.
-* Self-Attention thực hiện toàn bộ quá trình ánh xạ ngữ cảnh trong $O(1)$ bước tính toán song song.
+* **Chi phí bậc hai theo độ dài chuỗi:** Khi $n$ rất lớn, ma trận Attention kích thước $n \times n$ gây tốn bộ nhớ và chi phí tính toán $O(n^2 \cdot d)$.
+* **Thiếu tính quy nạp về thứ tự:** Toán tử Self-Attention bất biến với phép hoán vị nên bắt buộc phụ thuộc vào Positional Encoding.
 
 </div>
 </div>
 
-
-
----
-transition: slide-left
----
-
-# Kết quả Thực nghiệm trên Tác vụ Machine Translation (WMT 2014)
-
-Hiệu năng của mô hình Transformer trên bộ dữ liệu chuẩn WMT 2014:
-
-<div class="grid grid-cols-2 gap-5 mt-4">
-<div class="space-y-3">
-<div class="p-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10">
-<div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">English-to-German</div>
-<div class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">28.4 BLEU</div>
-<div class="text-[11px] text-gray-600 dark:text-gray-300 mt-1">Vượt mô hình tốt nhất trước đó 2.0 điểm BLEU.</div>
-</div>
-
-<div class="p-3 rounded-lg border border-blue-500/30 bg-blue-500/10">
-<div class="text-[10px] text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider">English-to-French</div>
-<div class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">41.8 BLEU</div>
-<div class="text-[11px] text-gray-600 dark:text-gray-300 mt-1">Đạt kết quả State-of-the-Art với chi phí tính toán thấp hơn các baseline.</div>
-</div>
-</div>
-
-<div class="p-3.5 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 text-[11px] flex flex-col justify-between">
-<div>
-<div class="font-semibold text-xs text-gray-800 dark:text-gray-200 mb-2">Chi phí Huấn luyện:</div>
-<ul class="space-y-1.5 list-disc pl-4 text-gray-600 dark:text-gray-300">
-<li><strong>Transformer Base (65M tham số):</strong> Thời gian huấn luyện 12 giờ trên 8 GPU NVIDIA P100.</li>
-<li><strong>Transformer Big (213M tham số):</strong> Thời gian huấn luyện 3.5 ngày.</li>
-<li>Hiệu suất tính toán cao nhờ khả năng song song hóa hoàn toàn trên phần cứng.</li>
-</ul>
-</div>
-
-<div class="mt-3 pt-2.5 border-t border-gray-100 dark:border-gray-800 text-[10px] text-gray-400">
-Số liệu trích xuất từ Bảng 2, Vaswani et al. (2017).
-</div>
-</div>
-</div>
+<!--
+[Thời lượng: 1p | Phương pháp 5/5: Ưu nhược điểm & So sánh đánh giá]
+- Mục tiêu vận hành: Đọc và đối sánh 3 cột định lượng trong Table 1 của bài báo để chứng minh khi nào Self-Attention thắng tuyệt đối và khi nào nó bộc lộ điểm yếu.
+- Cơ chế sinh & Ánh xạ thực thể <-> Bảng độ phức tạp:
+  1. Cột Sequential Ops (Số phép toán tuần tự): Mạng Recurrent phải chạy t = 1..n nên tốn O(n) bước tuần tự; trong khi Self-Attention gom toàn bộ câu vào một phép nhân ma trận QK^T nên chỉ tốn O(1) bước tuần tự trên GPU.
+  2. Cột Max Path Length (Đường truyền tối đa giữa 2 từ xa nhất): Trên Recurrent, từ thứ 1 muốn tới từ thứ n phải đi qua n bước O(n); trên Convolutional dùng cửa sổ trượt kích thước k phải xếp chồng O(log_k(n)) tầng; còn trên Self-Attention, mọi cặp từ nhân tích vô hướng trực tiếp với nhau ở ngay tầng đầu tiên nên đường truyền là O(1).
+  3. Cột Complexity per Layer (Độ phức tạp mỗi tầng — sinh ra cả ưu điểm lẫn nhược điểm):
+     - Phép nhân ma trận Q [n, d] với K^T [d, n] tốn O(n^2 * d) phép tính, còn mạng Recurrent nhân ma trận trạng thái U [d, d] qua n bước tốn O(n * d^2).
+     - Ưu điểm: Trong các câu văn thông thường, độ dài câu n (khoảng 30 đến 100 token) nhỏ hơn nhiều so với số chiều d = 512, nên O(n^2 * d) thực tế nhẹ hơn và nhanh hơn O(n * d^2) của RNN.
+     - Nhược điểm: Khi độ dài chuỗi n tăng lên hàng chục ngàn token (ví dụ xử lý cả cuốn sách), đại lượng n^2 bùng nổ theo hàm bậc hai — tăng gấp 10 lần độ dài chuỗi sẽ làm bộ nhớ lưu ma trận [n, n] tăng gấp 100 lần. Ngoài ra, nếu quá trình suy luận gặp chuỗi dài vượt xa phạm vi Positional Encoding đã học thì chất lượng biểu diễn vị trí cũng suy giảm.
+- Cầu nối sang Trang 9: Từ những ưu thế và giới hạn định lượng này, ta đi đến kết luận tổng quát về giá trị của kiến trúc Transformer.
+-->

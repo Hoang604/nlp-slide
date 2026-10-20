@@ -4,14 +4,14 @@ theme: seriph
 title: "Kiến trúc Transformer trong Xử lý Ngôn ngữ Tự nhiên"
 info: |
   Báo cáo chuyên đề: Xử lý Ngôn ngữ Tự nhiên
-  Phân tích kiến trúc Transformer theo Vaswani et al. (2017)
+  Phân tích kiến trúc Transformer theo Vaswani et al., 2017
 class: text-center relative overflow-hidden bg-white dark:bg-[#121212]
 highlighter: shiki
 drawings:
   persist: false
 transition: slide-left
 mdc: true
-duration: 25min
+duration: 10min
 ---
 
 <CoverBackdrop />
@@ -21,7 +21,7 @@ duration: 25min
 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/25 bg-blue-500/5 text-blue-600 dark:text-blue-400 text-[11px] font-mono tracking-wider uppercase">
 <span>Báo cáo Chuyên đề</span>
 <span>·</span>
-<span>Vaswani et al. (2017)</span>
+<span>Vaswani et al., 2017</span>
 </div>
 
 <h1 class="!text-5xl font-sans font-bold text-gray-900 dark:text-white mt-6 tracking-tight">
@@ -29,7 +29,7 @@ Kiến trúc Transformer
 </h1>
 
 <p class="text-sm text-gray-600 dark:text-gray-300 mt-2.5 max-w-xl leading-relaxed">
-Bản chất Toán học, Cơ chế Self-Attention và Đột phá trong Mô hình hóa Chuỗi
+Bản chất Toán học, Cơ chế Self-Attention và Mô hình hóa Chuỗi Song song
 </p>
 
 <div class="mt-6 flex justify-center items-center gap-3">
@@ -44,58 +44,11 @@ Chuyên đề: Xử lý Ngôn ngữ Tự nhiên
 
 </div>
 
----
-layout: default
-transition: slide-up
----
-
-# Cấu trúc Báo cáo
-
-<div class="grid grid-cols-2 gap-5 mt-5">
-<div class="space-y-3">
-<div class="p-3 rounded-lg border border-blue-500/20 bg-blue-500/5">
-<div class="font-semibold text-xs text-blue-700 dark:text-blue-300 flex items-center gap-2">
-<span class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-[10px]">01</span>
-Bối cảnh & Giới hạn của Recurrent Neural Network
-</div>
-<p class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 pl-7">Phân tích Sequential Bottleneck và Long-term Dependency trên RNN và LSTM.</p>
-</div>
-
-<div class="p-3 rounded-lg border border-purple-500/20 bg-purple-500/5">
-<div class="font-semibold text-xs text-purple-700 dark:text-purple-300 flex items-center gap-2">
-<span class="w-5 h-5 rounded-full bg-purple-500 text-white flex items-center justify-center text-[10px]">02</span>
-Cơ chế Self-Attention & Nền tảng Toán học
-</div>
-<p class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 pl-7">Đặc tả Query, Key, Value, Scaled Dot-Product và Multi-Head Attention.</p>
-</div>
-
-<div class="p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5">
-<div class="font-semibold text-xs text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
-<span class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">03</span>
-Kiến trúc Hoàn chỉnh: Encoder & Decoder
-</div>
-<p class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 pl-7">Positional Encoding, Add & Norm, Feed-Forward Network và Causal Masking.</p>
-</div>
-</div>
-
-<div class="space-y-3">
-<div class="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5">
-<div class="font-semibold text-xs text-amber-700 dark:text-amber-300 flex items-center gap-2">
-<span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">04</span>
-Chi phí Tính toán, Huấn luyện & Thực nghiệm
-</div>
-<p class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 pl-7">Độ phức tạp tính toán theo Bảng 1 và kết quả thực nghiệm WMT 2014.</p>
-</div>
-
-<div class="p-3 rounded-lg border border-rose-500/20 bg-rose-500/5">
-<div class="font-semibold text-xs text-rose-700 dark:text-rose-300 flex items-center gap-2">
-<span class="w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px]">05</span>
-Các Vấn đề Kỹ thuật Mở rộng
-</div>
-<p class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 pl-7">So sánh Layer Normalization với Batch Normalization, Pre-LN với Post-LN.</p>
-</div>
-</div>
-</div>
+<!--
+[Thời lượng: 20s | Mở đầu]
+- Mục tiêu vận hành: Định vị rõ câu hỏi kỹ thuật trung tâm mà bài báo Vaswani et al., 2017 giải quyết: Làm thế nào để một mạng nơ-ron nắm bắt sự phụ thuộc giữa mọi từ trong một câu ở khoảng cách bất kỳ mà không cần xử lý tuần tự từng từ một theo thời gian.
+- Cầu nối sang Trang 2: Trước khi đi vào cách Transformer giải quyết câu hỏi đó, ta cần xác định rõ dữ liệu đầu vào và đầu ra của bài toán ánh xạ chuỗi được biểu diễn thành các con số như thế nào.
+-->
 
 ---
 src: ./pages/01-motivation.md
@@ -114,24 +67,47 @@ src: ./pages/04-training-results.md
 ---
 
 ---
+transition: slide-up
 layout: center
 class: text-center
 ---
 
 # Kết luận
 
-<div class="text-xs text-gray-600 dark:text-gray-300 max-w-xl mx-auto mt-4 leading-relaxed">
+<div class="text-xs text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-3 leading-relaxed space-y-2.5 text-left">
 
-Kiến trúc Transformer đã chứng minh tính hiệu quả vượt trội trong việc mở rộng quy mô tính toán và biểu diễn ngữ cảnh, trở thành kiến trúc nền tảng trong xử lý ngôn ngữ tự nhiên và các lĩnh vực học máy liên ngành.
+<div class="p-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/60">
+
+**Đóng góp Kiến trúc:** Thay thế hoàn toàn cấu trúc đệ quy và tích chập bằng cơ chế Self-Attention, rút ngắn khoảng cách truyền thông tin giữa hai vị trí bất kỳ trong chuỗi về mức hằng số $O(1)$.
 
 </div>
 
-<div class="mt-7 flex justify-center gap-3">
-<TensorBadge name="Complexity" shape="O(1) Sequential Operations" color="blue" />
-<TensorBadge name="Hardware" shape="100% GPU Parallel" color="emerald" />
-<TensorBadge name="Architecture" shape="Attention Is All You Need" color="purple" />
+<div class="p-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/60">
+
+**Hiệu quả Tính toán và Tác động:** Giải phóng quá trình huấn luyện khỏi ràng buộc tuần tự theo thời gian, khai thác năng lực tính toán ma trận song song trên phần cứng GPU và đặt nền móng cho các mô hình ngôn ngữ lớn hiện đại.
+
 </div>
 
-<div class="mt-10 text-base font-semibold text-gray-800 dark:text-gray-200">
+</div>
+
+<div class="mt-5 flex justify-center gap-3">
+<TensorBadge name="Sequential Ops" shape="O(1)" color="blue" />
+<TensorBadge name="Max Path Length" shape="O(1)" color="emerald" />
+<TensorBadge name="Core Mechanism" shape="Multi-Head Self-Attention" color="purple" />
+</div>
+
+<div class="mt-6 text-sm font-semibold text-gray-800 dark:text-gray-200">
 Phần Thảo luận & Trả lời Câu hỏi
 </div>
+
+<!--
+[Thời lượng: 30s - 1p | Kết luận]
+- Mục tiêu vận hành: Tổng hợp chuỗi nhân quả từ đầu bài tới cuối bài thông qua hai chỉ số cốt lõi.
+- Cơ chế tổng kết:
+  1. Bằng cách thay phép truyền trạng thái ẩn nối tiếp nhau bằng phép nhân ma trận tương quan trực tiếp giữa mọi cặp vị trí, Transformer đưa khoảng cách giao tiếp giữa hai token bất kỳ về đúng 1 bước.
+  2. Bằng cách loại bỏ sự phụ thuộc thời gian trong quá trình lan truyền thuận và lan truyền ngược khi huấn luyện, toàn bộ chuỗi văn bản được xử lý đồng thời trên GPU trong 1 bước tuần tự.
+- Hướng mở rộng cho phần hỏi đáp:
+  1. Từ nhánh Encoder phát triển thành dòng mô hình biểu diễn ngữ cảnh hai chiều như BERT.
+  2. Từ nhánh Decoder với Causal Masking phát triển thành dòng mô hình sinh văn bản tự hồi quy quy mô lớn như GPT và LLaMA.
+  3. Từ hạn chế bậc hai O(n^2 * d) phát triển thành các kỹ thuật tối ưu như FlashAttention, Sparse Attention và Linear Attention.
+-->
