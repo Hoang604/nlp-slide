@@ -15,7 +15,7 @@ const rows = [
     sequential: 'O(1)',
     maxPath: 'O(1)',
     pros: 'Song song hóa toàn bộ chuỗi, đường truyền thông tin trực tiếp',
-    badge: 'Paper Core'
+    badge: 'Transformer'
   },
   {
     id: 'recurrent',
@@ -90,7 +90,7 @@ const rows = [
       </tbody>
     </table>
     <div class="px-3 py-0.5 bg-gray-50 dark:bg-gray-900/60 text-[9.5px] text-gray-500 flex justify-between border-t border-gray-100 dark:border-gray-800">
-      <span>* Trích xuất theo Table 1, Vaswani et al., 2017 — Attention Is All You Need.</span>
+      <span>* Nguồn phân tích độ phức tạp lý thuyết: Vaswani et al., 2017.</span>
       <span class="font-mono">n: sequence length, d: representation dimension, k: kernel size</span>
     </div>
   </div>

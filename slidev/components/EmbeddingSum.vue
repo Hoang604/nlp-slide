@@ -9,9 +9,9 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   token: 'Word Embedding',
-  tokenDim: 'd = 512',
+  tokenDim: 'd_model',
   pos: 'Positional Encoding',
-  posDim: 'd = 512',
+  posDim: 'd_model',
   note: 'Phép cộng từng phần tử bảo toàn số chiều d_model thay vì tăng gấp đôi kích thước như phép Concat.'
 })
 </script>
@@ -43,7 +43,7 @@ withDefaults(defineProps<Props>(), {
       <div class="flex-1 p-2.5 rounded-lg border border-emerald-500/40 bg-emerald-500/15 shadow-sm">
         <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Vector Input Encoder</div>
         <div class="text-xs font-bold text-gray-900 dark:text-white mt-0.5">Biểu diễn Toàn diện</div>
-        <div class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold mt-0.5">[d = 512]</div>
+        <div class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold mt-0.5">[{{ tokenDim }}]</div>
       </div>
     </div>
 

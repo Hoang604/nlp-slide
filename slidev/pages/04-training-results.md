@@ -34,7 +34,7 @@ Nhược điểm và Giới hạn của Phương pháp
 
 <!--
 [Thời lượng: 1p | Phương pháp 5/5: Ưu nhược điểm & So sánh đánh giá]
-- Mục tiêu vận hành: Đọc và đối sánh 3 cột định lượng trong Table 1 của bài báo để chứng minh khi nào Self-Attention thắng tuyệt đối và khi nào nó bộc lộ điểm yếu.
+- Mục tiêu vận hành: Đọc và đối sánh 3 cột định lượng trong bảng độ phức tạp để chứng minh khi nào Self-Attention thắng tuyệt đối và khi nào nó bộc lộ điểm yếu.
 - Cơ chế sinh & Ánh xạ thực thể <-> Bảng độ phức tạp:
   1. Cột Sequential Ops (Số phép toán tuần tự): Mạng Recurrent phải chạy t = 1..n nên tốn O(n) bước tuần tự; trong khi Self-Attention gom toàn bộ câu vào một phép nhân ma trận QK^T nên chỉ tốn O(1) bước tuần tự trên GPU.
   2. Cột Max Path Length (Đường truyền tối đa giữa 2 từ xa nhất): Trên Recurrent, từ thứ 1 muốn tới từ thứ n phải đi qua n bước O(n); trên Convolutional dùng cửa sổ trượt kích thước k phải xếp chồng O(log_k(n)) tầng; còn trên Self-Attention, mọi cặp từ nhân tích vô hướng trực tiếp với nhau ở ngay tầng đầu tiên nên đường truyền là O(1).

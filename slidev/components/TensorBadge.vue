@@ -53,7 +53,7 @@ const current = colorStyles[props.color] ?? colorStyles.blue
 </script>
 
 <template>
-  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-mono transition-all shadow-sm"
+  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-mono transition-all shadow-sm whitespace-nowrap shrink-0"
     :class="[current.bg, current.border, current.text]">
     <span class="w-1.5 h-1.5 rounded-full animate-pulse" :class="current.dot"></span>
     <span v-if="name" class="font-semibold font-sans tracking-wide mr-1">{{ name }}:</span>

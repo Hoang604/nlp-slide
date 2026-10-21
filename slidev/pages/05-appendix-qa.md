@@ -1,5 +1,5 @@
 ---
-transition: slide-up
+transition: slide-left
 layout: section
 class: text-center
 ---
@@ -144,7 +144,7 @@ Kiến trúc Transformer đã chứng minh tính hiệu quả vượt trội tro
 <div class="mt-7 flex justify-center gap-3">
 <TensorBadge name="Complexity" shape="O(1) Sequential Operations" color="blue" />
 <TensorBadge name="Hardware" shape="100% GPU Parallel" color="emerald" />
-<TensorBadge name="Architecture" shape="Attention Is All You Need" color="purple" />
+<TensorBadge name="Architecture" shape="Multi-Head Self-Attention" color="purple" />
 </div>
 
 <div class="mt-10 text-base font-semibold text-gray-800 dark:text-gray-200">

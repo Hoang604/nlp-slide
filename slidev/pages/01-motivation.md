@@ -1,5 +1,5 @@
 ---
-transition: slide-up
+transition: slide-left
 ---
 
 # Giới thiệu Bài toán Sequence Transduction
@@ -12,7 +12,7 @@ Bài toán ánh xạ chuỗi đầu vào $X = (x_1, x_2, \dots, x_n)$ sang chu�
 <template #left>
 
 * Chuỗi văn bản nguồn được phân tách thành $n$ token rời rạc thuộc không gian từ vựng kích thước $V$.
-* Mỗi token $x_t$ được ánh xạ qua ma trận Token Embedding thành vector đặc trưng liên tục có số chiều $d_{model} = 512$.
+* Mỗi token $x_t$ được ánh xạ qua ma trận Token Embedding thành vector đặc trưng liên tục có số chiều $d_{model}$.
 * Toàn bộ lô dữ liệu đầu vào được biểu diễn dưới dạng tensor 3 chiều:
 
 $$
@@ -36,7 +36,7 @@ $$
 </div>
 
 <div class="mt-3 flex justify-between items-center text-[11px] px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-900/60">
-<TensorBadge name="Input Tensor" shape="B × n × 512" color="blue" />
+<TensorBadge name="Input Tensor" shape="B × n × d_model" color="blue" />
 <span class="font-mono text-gray-500">➔ Mô hình Sequence-to-Sequence ➔</span>
 <TensorBadge name="Output Distribution" shape="B × m × V" color="emerald" />
 </div>
@@ -47,14 +47,14 @@ $$
 - Cơ chế sinh & Ánh xạ thực thể <-> Ký hiệu:
   1. Phía Input: Giả sử câu tiếng Anh đầu vào gồm 5 token ["The", "animal", "didn't", "cross", "it"]. Máy tính không nhân ma trận trực tiếp trên chữ cái, nên mỗi token được tra cứu thành một vector gồm 512 số thực thể hiện đặc trưng ngữ nghĩa <-> x_t thuộc R^512. Khi gom B câu vào cùng một lô xử lý, toàn bộ đầu vào là một khối số 3 chiều [B, 5, 512] <-> X thuộc R^(B x n x d_model).
   2. Phía Output: Câu tiếng Việt đích có thể dài 6 hoặc 7 token, nghĩa là độ dài m khác n. Do đó mô hình không thể xuất một lần ra ngay câu đích cố định, mà tại mỗi bước t phải nhìn vào toàn bộ câu nguồn X cùng các từ đích đã sinh từ bước 1 đến t-1 để tính bảng điểm xác suất trên toàn bộ từ điển V (ví dụ 37000 token), chọn ra token có xác suất cao nhất rồi lặp lại <-> Công thức tích xác suất có điều kiện P(Y | X).
-- Khoảng trống & Cầu nối sang Trang 3: Bài toán đòi hỏi mô hình phải nén và kết nối ngữ cảnh của n vector đầu vào để sinh từng từ đầu ra. Vậy trước năm 2017, các kiến trúc mạng nơ-ron đã kết nối n vector này bằng cơ chế nào và tại sao cơ chế đó bị nghẽn?
+- Khoảng trống & Cầu nối sang Trang 3: Bài toán đòi hỏi mô hình phải nén và kết nối ngữ cảnh của n vector đầu vào để sinh từng từ đầu ra. Vậy các kiến trúc mạng nơ-ron tiền nhiệm đã kết nối n vector này bằng cơ chế nào và tại sao cơ chế đó bị nghẽn?
 -->
 
 ---
-transition: slide-up
+transition: slide-left
 ---
 
-# Các Nghiên cứu Liên quan trong Mô hình hóa Chuỗi
+# Các Kiến trúc Mô hình hóa Chuỗi Tiền nhiệm
 
 Các phương pháp tiếp cận bài toán Sequence-to-Sequence trước kiến trúc Transformer:
 

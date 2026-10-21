@@ -1,10 +1,10 @@
 ---
-transition: slide-up
+transition: slide-left
 ---
 
 # Tổng thể Workflow Kiến trúc Transformer
 
-Kiến trúc Encoder-Decoder loại bỏ hoàn toàn phép đệ quy, gồm $N=6$ tầng đồng nhất ở mỗi nhánh:
+Kiến trúc Encoder-Decoder loại bỏ hoàn toàn phép đệ quy, xếp chồng $N$ tầng đồng nhất ở mỗi nhánh với cấu hình tiêu chuẩn $N=6, d_{model}=512$ theo Vaswani et al., 2017:
 
 <div class="grid grid-cols-3 gap-4 mt-2 items-center">
 <div class="col-span-1">
@@ -14,7 +14,11 @@ Kiến trúc Encoder-Decoder loại bỏ hoàn toàn phép đệ quy, gồm $N=6
 <div class="col-span-2 space-y-2.5 text-[11px]">
 <div class="p-2.5 rounded-lg border border-blue-500/25 bg-blue-500/5">
 
-<div class="font-semibold text-xs text-blue-700 dark:text-blue-300 mb-1">1. Luồng xử lý tại Khối Encoder với 6 tầng đồng nhất</div>
+<div class="font-semibold text-xs text-blue-700 dark:text-blue-300 mb-1 [&>p]:!m-0">
+
+1\. Luồng xử lý tại Khối Encoder qua $N = 6$ tầng đồng nhất
+
+</div>
 
 * Tiếp nhận tổng của Token Embedding và Positional Encoding, xử lý song song toàn bộ chuỗi nguồn qua hai Sub-layer: **Multi-Head Self-Attention** và **Position-wise Feed-Forward Network**.
 * Trích xuất ma trận biểu diễn ngữ cảnh hai chiều làm nguồn thông tin cho Decoder.
@@ -23,7 +27,11 @@ Kiến trúc Encoder-Decoder loại bỏ hoàn toàn phép đệ quy, gồm $N=6
 
 <div class="p-2.5 rounded-lg border border-purple-500/25 bg-purple-500/5">
 
-<div class="font-semibold text-xs text-purple-700 dark:text-purple-300 mb-1">2. Luồng xử lý tại Khối Decoder với 6 tầng đồng nhất</div>
+<div class="font-semibold text-xs text-purple-700 dark:text-purple-300 mb-1 [&>p]:!m-0">
+
+2\. Luồng xử lý tại Khối Decoder qua $N = 6$ tầng đồng nhất
+
+</div>
 
 * **Masked Multi-Head Attention:** Che các token tương lai nhằm bảo toàn tính nhân quả.
 * **Cross-Attention:** Lấy Query từ tầng Decoder phía dưới, kết hợp với Key và Value xuất ra từ khối Encoder.
@@ -31,8 +39,8 @@ Kiến trúc Encoder-Decoder loại bỏ hoàn toàn phép đệ quy, gồm $N=6
 
 </div>
 
-<div class="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 font-mono text-[10.5px] text-center">
-Mọi Sub-layer đều tích hợp Residual Connection & LayerNorm: LayerNorm(x + Sublayer(x)) — Shape [B, T, 512]
+<div class="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 font-mono text-[10px] text-center">
+Mọi Sub-layer đều qua Add & Norm: LayerNorm(x + Sublayer(x)) — Shape [B, T, d_model]
 </div>
 </div>
 </div>
@@ -81,8 +89,8 @@ $$
 </div>
 
 <div class="space-y-3">
-<EmbeddingSum token="Word Embedding" tokenDim="d = 512" pos="Positional Encoding" posDim="d = 512"
-note="Phép cộng từng phần tử bảo toàn kích thước không gian d_model = 512, không làm tăng số lượng tham số của mô hình." />
+<EmbeddingSum token="Word Embedding" tokenDim="d_model" pos="Positional Encoding" posDim="d_model"
+note="Phép cộng từng phần tử bảo toàn kích thước không gian d_model, không làm tăng số lượng tham số của mô hình." />
 
 <div class="p-2.5 rounded-lg border border-blue-500/20 bg-blue-500/5 text-[11px] text-gray-700 dark:text-gray-300 leading-relaxed">
 
