@@ -42,12 +42,10 @@ $$
 </div>
 
 <!--
-[Thời lượng: 1p - 1p30s | Giới thiệu bài toán: Input & Output]
-- Mục tiêu vận hành: Xác định rõ hình dạng toán học của dữ liệu khi đi vào và đi ra khỏi mô hình dịch máy hoặc chuyển đổi chuỗi.
-- Cơ chế sinh & Ánh xạ thực thể <-> Ký hiệu:
-  1. Phía Input: Giả sử câu tiếng Anh đầu vào gồm 5 token ["The", "animal", "didn't", "cross", "it"]. Máy tính không nhân ma trận trực tiếp trên chữ cái, nên mỗi token được tra cứu thành một vector gồm 512 số thực thể hiện đặc trưng ngữ nghĩa <-> x_t thuộc R^512. Khi gom B câu vào cùng một lô xử lý, toàn bộ đầu vào là một khối số 3 chiều [B, 5, 512] <-> X thuộc R^(B x n x d_model).
-  2. Phía Output: Câu tiếng Việt đích có thể dài 6 hoặc 7 token, nghĩa là độ dài m khác n. Do đó mô hình không thể xuất một lần ra ngay câu đích cố định, mà tại mỗi bước t phải nhìn vào toàn bộ câu nguồn X cùng các từ đích đã sinh từ bước 1 đến t-1 để tính bảng điểm xác suất trên toàn bộ từ điển V (ví dụ 37000 token), chọn ra token có xác suất cao nhất rồi lặp lại <-> Công thức tích xác suất có điều kiện P(Y | X).
-- Khoảng trống & Cầu nối sang Trang 3: Bài toán đòi hỏi mô hình phải nén và kết nối ngữ cảnh của n vector đầu vào để sinh từng từ đầu ra. Vậy các kiến trúc mạng nơ-ron tiền nhiệm đã kết nối n vector này bằng cơ chế nào và tại sao cơ chế đó bị nghẽn?
+- Input: Chuỗi n token rời rạc được ánh xạ qua Token Embedding thành tensor [B, n, d_model].
+- Output: Độ dài đích m khác n nên mô hình sinh từng từ theo cơ chế Autoregressive.
+- Công thức tích xác suất: Xác suất xuất hiện cả chuỗi Y bằng tích xác suất từng từ y_t khi đã biết các từ cụ thể y_1..y_{t-1} đã chọn trước đó và câu nguồn X.
+- Tầng Linear chiếu vector ẩn d_model sang kích thước từ điển V, qua Softmax chuẩn hóa thành phân phối xác suất.
 -->
 
 ---
@@ -129,14 +127,7 @@ Trạng thái $h_t$ bắt buộc phải đợi $h_{t-1}$ hoàn tất với độ
 </div>
 
 <!--
-[Thời lượng: 1p | Các nghiên cứu liên quan]
-- Mục tiêu vận hành: Chẩn đoán nguyên nhân cơ học vì sao mọi biến thể dựa trên mạng Recurrent đều không thể mở rộng quy mô tính toán và suy giảm chất lượng trên câu dài.
-- Cơ chế sinh & Ánh xạ thực thể <-> Ký hiệu:
-  1. Vanilla RNN: Để đọc từ thứ 5 là "it", mô hình lấy vector của từ thứ 5 cộng với trạng thái ẩn h_4 vừa truyền sang rồi ép qua hàm tanh <-> h_5 = tanh(W x_5 + U h_4). Khi tính đạo hàm ngược từ từ thứ 50 về từ thứ 1, đạo hàm phải nhân liên tiếp 50 lần ma trận U và đạo hàm hàm tanh nhỏ hơn 1, làm tín hiệu tiến về 0 <-> Gradient Vanishing.
-  2. LSTM & GRU: Thay phép nhân ma trận liên tiếp bằng một đường truyền cộng tuyến tính qua cổng kiểm soát f_t và i_t <-> c_t = f_t * c_{t-1} + i_t * c~_t. Giải quyết được phần nào việc mất đạo hàm, nhưng để tính c_5 thì máy tính vẫn phải đợi c_4 tính xong.
-  3. Seq2Seq + Attention của Bahdanau: Cho phép Decoder nhìn lại mọi trạng thái h_1..h_n của Encoder, nhưng bản thân việc tạo ra h_1..h_n vẫn phải chạy nối đuôi nhau trên RNN.
-- Hai điểm nghẽn tất yếu sinh ra từ cấu trúc trên:
-  1. Sequential Bottleneck: Dù GPU có hàng ngàn nhân tính toán song song, khi gặp câu dài 100 từ thì ở bước t=2 toàn bộ GPU vẫn phải chờ bước t=1 tính xong h_1 <-> O(n) bước tuần tự.
-  2. Long-term Dependency: Thông tin từ đại từ "it" ở cuối câu muốn liên kết với danh từ "animal" ở đầu câu phải đi vòng qua toàn bộ các trạng thái trung gian h_2, h_3, h_4 <-> Đường truyền dài O(n).
-- Khoảng trống & Cầu nối sang Trang 4: Muốn triệt tiêu cùng lúc cả hai hạn chế này, ta phải cắt bỏ hoàn toàn mũi tên truyền trạng thái từ t-1 sang t. Trang tiếp theo trình bày tổng thể luồng hoạt động của Transformer khi loại bỏ hoàn toàn phép đệ quy.
+- Nút cổ chai nén thông tin (RNN, LSTM): Toàn bộ lịch sử 1..t-1 bị nhồi vào một vector trạng thái ẩn có kích thước cố định để nhân ma trận; chuỗi càng dài thông tin đầu câu càng bị pha loãng và suy giảm đạo hàm qua O(n) bước.
+- Seq2Seq + Attention: Giữ lại toàn bộ h_1..h_n cho Decoder tra cứu, nhưng bản thân mỗi h_t vẫn phải tính nối tiếp từ h_{t-1}.
+- Hai điểm nghẽn: Sequential Bottleneck tốn O(n) bước tuần tự làm tê liệt GPU, và Long-term Dependency có đường truyền dài O(n).
 -->

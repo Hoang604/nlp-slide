@@ -45,9 +45,8 @@ Môn học: Xử lý Ngôn ngữ Tự nhiên
 </div>
 
 <!--
-[Thời lượng: 20s | Mở đầu]
-- Mục tiêu vận hành: Định vị rõ câu hỏi kỹ thuật trung tâm mà kiến trúc Transformer giải quyết: Làm thế nào để một mạng nơ-ron nắm bắt sự phụ thuộc giữa mọi từ trong một câu ở khoảng cách bất kỳ mà không cần xử lý tuần tự từng từ một theo thời gian.
-- Cầu nối sang Trang 2: Trước khi đi vào cách Transformer giải quyết câu hỏi đó, ta cần xác định rõ dữ liệu đầu vào và đầu ra của bài toán ánh xạ chuỗi được biểu diễn thành các con số như thế nào.
+- Bài toán cốt lõi: Nắm bắt phụ thuộc giữa mọi token ở khoảng cách bất kỳ mà không cần xử lý tuần tự theo thời gian.
+- Giải pháp của Transformer: Thay thế hoàn toàn cấu trúc đệ quy bằng cơ chế Self-Attention tính toán song song trên GPU.
 -->
 
 ---
@@ -101,13 +100,6 @@ Phần Thảo luận & Trả lời Câu hỏi
 </div>
 
 <!--
-[Thời lượng: 30s - 1p | Kết luận]
-- Mục tiêu vận hành: Tổng hợp chuỗi nhân quả từ đầu bài tới cuối bài thông qua hai chỉ số cốt lõi.
-- Cơ chế tổng kết:
-  1. Bằng cách thay phép truyền trạng thái ẩn nối tiếp nhau bằng phép nhân ma trận tương quan trực tiếp giữa mọi cặp vị trí, Transformer đưa khoảng cách giao tiếp giữa hai token bất kỳ về đúng 1 bước.
-  2. Bằng cách loại bỏ sự phụ thuộc thời gian trong quá trình lan truyền thuận và lan truyền ngược khi huấn luyện, toàn bộ chuỗi văn bản được xử lý đồng thời trên GPU trong 1 bước tuần tự.
-- Hướng mở rộng cho phần hỏi đáp:
-  1. Từ nhánh Encoder phát triển thành dòng mô hình biểu diễn ngữ cảnh hai chiều như BERT.
-  2. Từ nhánh Decoder với Causal Masking phát triển thành dòng mô hình sinh văn bản tự hồi quy quy mô lớn như GPT và LLaMA.
-  3. Từ hạn chế bậc hai O(n^2 * d) phát triển thành các kỹ thuật tối ưu như FlashAttention, Sparse Attention và Linear Attention.
+- Tóm tắt cốt lõi: Đưa cả số bước tính toán tuần tự lẫn khoảng cách truyền thông tin giữa hai token bất kỳ về O(1).
+- Ba nhánh phát triển từ Transformer: Encoder-Only (BERT) biểu diễn ngữ cảnh hai chiều; Decoder-Only (GPT, LLaMA) sinh văn bản tự hồi quy; Encoder-Decoder (T5, BART) chuyển đổi chuỗi sang chuỗi.
 -->
